@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Resizer Tool</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            color: #212529;
+            line-height: 1.5;
+        }
+        header {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: 600;
+        }
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+        }
+        main {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #343a40;
+        }
+        p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+        #tool {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #upload {
+            margin: 15px 0;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 2px;
+            width: 100%;
+            max-width: 400px;
+        }
+        label {
+            font-weight: 500;
+            margin-bottom: 10px;
+            display: block;
+        }
+        #target-size {
+            width: 100%;
+            max-width: 400px;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 2px;
+            margin-bottom: 15px;
+        }
+        button {
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            border-radius: 2px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+            width: 100%;
+            max-width: 400px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #status {
+            margin: 15px 0;
+            font-weight: 500;
+            color: #6c757d;
+        }
+        #preview {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        .image-container {
+            flex: 1 1 45%;
+            text-align: center;
+            margin: 10px;
+            background-color: #f8f9fa;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 2px;
+            padding: 5px;
+        }
+        .image-container p {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        #download {
+            display: none;
+            background-color: #28a745;
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 2px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 15px;
+        }
+        #download:hover {
+            background-color: #218838;
+        }
+        footer {
+            background-color: #343a40;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            header {
+                padding: 30px 15px;
+            }
+            header h1 {
+                font-size: 2rem;
+            }
+            .container {
+                padding: 20px;
+            }
+            #preview {
+                flex-direction: column;
+            }
+            .image-container {
+                flex: 1 1 100%;
+            }
+            button, #upload, #target-size {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image Resizer Tool</h1>
+        <p>A professional tool to compress images to your desired file size in KB</p>
+    </header>
+    <main>
+        <div class="container">
+            <section id="description">
+                <h2>Description</h2>
+                <p>This application enables users to upload images and compress them to a specified file size in kilobytes (KB). All processing occurs client-side using JavaScript, ensuring data privacy and efficient performance. It supports common image formats such as JPEG and PNG, with optimal results for JPEG files.</p>
+            </section>
+            <section id="tool">
+                <h2>Resize Image</h2>
+                <input type="file" id="upload" accept="image/*">
+                <label for="target-size">Target Size (KB):</label>
+                <input type="number" id="target-size" min="1" value="100">
+                <button onclick="resizeImage()">Resize Image</button>
+                <div id="status"></div>
+                <div id="preview">
+                    <div class="image-container">
+                        <h3>Original Image</h3>
+                        <img id="original-preview" alt="Original Image">
+                        <p id="original-size"></p>
+                    </div>
+                    <div class="image-container">
+                        <h3>Resized Image</h3>
+                        <img id="resized-preview" alt="Resized Image">
+                        <p id="resized-size"></p>
+                        <a id="download" download="resized.jpg">Download Resized Image</a>
+                    </div>
+                </div>
+            </section>
+            <section id="about">
+                <h2>About</h2>
+                <p>Developed as a streamlined, single-page web application utilizing HTML, CSS, and JavaScript. It adjusts image quality and dimensions to achieve the target file size, optimized for seamless use across desktop and mobile devices.</p>
+            </section>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Image Resizer Tool. All rights reserved.</p>
+    </footer>
+    <script>
+        let originalImage = null;
+        let targetSizeKB = 100;
+
+        document.getElementById('upload').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImage = new Image();
+                    originalImage.src = e.target.result;
+                    originalImage.onload = function() {
+                        document.getElementById('original-preview').src = originalImage.src;
+                        const sizeKB = (file.size / 1024).toFixed(2);
+                        document.getElementById('original-size').textContent = `Size: ${sizeKB} KB`;
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('target-size').addEventListener('change', function(event) {
+            targetSizeKB = parseInt(event.target.value, 10);
+        });
+
+        function resizeImage() {
+            if (!originalImage) {
+                alert('Please upload an image first.');
+                return;
+            }
+
+            document.getElementById('status').textContent = 'Processing...';
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+
+            let width = originalImage.width;
+            let height = originalImage.height;
+            let quality = 0.9;
+            let blob = null;
+            const targetBytes = targetSizeKB * 1024;
+
+            const getBlob = () => new Promise((resolve) => {
+                canvas.toBlob(resolve, 'image/jpeg', quality);
+            });
+
+            const compress = async () => {
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(originalImage, 0, 0, width, height);
+                blob = await getBlob();
+
+                while (blob.size > targetBytes && quality > 0.1) {
+                    quality -= 0.05;
+                    blob = await getBlob();
+                }
+
+                if (blob.size > targetBytes) {
+                    const scale = Math.sqrt(targetBytes / blob.size);
+                    width = Math.round(width * scale * 0.9);
+                    height = Math.round(height * scale * 0.9);
+                    return compress();
+                }
+
+                return blob;
+            };
+
+            compress().then((finalBlob) => {
+                const url = URL.createObjectURL(finalBlob);
+                document.getElementById('resized-preview').src = url;
+                const sizeKB = (finalBlob.size / 1024).toFixed(2);
+                document.getElementById('resized-size').textContent = `Size: ${sizeKB} KB`;
+                const downloadLink = document.getElementById('download');
+                downloadLink.href = url;
+                downloadLink.style.display = 'inline-block';
+                document.getElementById('status').textContent = 'Processing complete.';
+            }).catch((err) => {
+                document.getElementById('status').textContent = 'Error processing image.';
+                console.error(err);
+            });
+        }
+    </script>
+</body>
+</html>
