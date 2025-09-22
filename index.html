@@ -3,294 +3,628 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Resizer Tool</title>
+    <title>Tiny PDF - PDF Compression Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #f8f9fa;
-            color: #212529;
-            line-height: 1.5;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        header {
-            background-color: #007bff;
-            color: #ffffff;
-            padding: 40px 20px;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5rem;
-            font-weight: 600;
-        }
-        header p {
-            margin: 10px 0 0;
-            font-size: 1.2rem;
-        }
-        main {
-            max-width: 100%;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        section {
-            margin-bottom: 40px;
-        }
-        h2 {
-            font-size: 1.8rem;
-            font-weight: 500;
-            margin-bottom: 20px;
-            color: #343a40;
-        }
-        p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-        #tool {
+        
+        body {
+            background-color: #f7f7f7;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            max-width: 1400px;
         }
-        #upload {
-            margin: 15px 0;
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, #2c3e50, #1a2530);
+            color: white;
             padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 2px;
-            width: 100%;
-            max-width: 400px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        label {
-            font-weight: 500;
-            margin-bottom: 10px;
-            display: block;
-        }
-        #target-size {
-            width: 100%;
-            max-width: 400px;
-            padding: 10px;
-            border: 1px solid #ced4da;
-            border-radius: 2px;
-            margin-bottom: 15px;
-        }
-        button {
-            background-color: #007bff;
-            color: #ffffff;
-            border: none;
-            padding: 12px 24px;
-            cursor: pointer;
-            border-radius: 2px;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            width: 100%;
-            max-width: 400px;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        #status {
-            margin: 15px 0;
-            font-weight: 500;
-            color: #6c757d;
-        }
-        #preview {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-        .image-container {
-            flex: 1 1 45%;
+        
+        .logo{
+            background-color:#0082FF;
+            padding: 5px px;
+            border-radius: 8px;
             text-align: center;
-            margin: 10px;
-            background-color: #f8f9fa;
-            padding: 20px;
-            border: 1px solid #e9ecef;
-            border-radius: 4px;
+            font-size: 30px;
         }
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #dee2e6;
-            border-radius: 2px;
-            padding: 5px;
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
         }
-        .image-container p {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #495057;
+        
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 700;
         }
-        #download {
-            display: none;
-            background-color: #28a745;
-            color: #ffffff;
-            padding: 10px 20px;
-            border-radius: 2px;
+        
+        .logo i {
+            font-size: 32px;
+            color: #ff6b6b;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+        
+        nav a {
+            color: white;
             text-decoration: none;
             font-weight: 500;
-            margin-top: 15px;
+            font-size: 17px;
+            transition: color 0.3s;
+            padding: 5px 10px;
+            border-radius: 2px;
         }
-        #download:hover {
-            background-color: #218838;
+        
+        nav a:hover {
+            color: #ff6b6b;
+            background: rgba(255, 255, 255, 0.1);
         }
+        
+        /* Main Content */
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            flex: 1;
+        }
+        
+        /* Tool Section */
+        .tool-container {
+            background-color: white;
+            border-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .tool-title {
+            font-size: 24px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .tool-description {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #7f8c8d;
+            font-size: 15px;
+        }
+        
+        .upload-area {
+            border: 2px dashed #e0e0e0;
+            border-radius: 2px;
+            padding: 40px 20px;
+            text-align: center;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #3498db;
+            background-color: #f9f9f9;
+        }
+        
+        .upload-area i {
+            font-size: 48px;
+            color: #3498db;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .upload-area p {
+            margin-bottom: 15px;
+        }
+        
+        .browse-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        
+        .browse-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .options {
+            margin-bottom: 25px;
+        }
+        
+        .option-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .size-input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        input[type="number"] {
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 2px;
+            width: 120px;
+            font-size: 14px;
+        }
+        
+        .compress-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        
+        .compress-btn:hover {
+            background-color: #27ae60;
+        }
+        
+        .compress-btn:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+        
+        .loading {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .result {
+            display: none;
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .success-icon {
+            color: #2ecc71;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        .download-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 2px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        
+        .download-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .file-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .file-info:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        /* About Section */
+        .about-section {
+            background-color: white;
+            border-radius: 2px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            padding: 10px 10px;
+            margin-bottom: 20px;
+        }
+        
+        .about-title {
+            background-color:#FF0000; padding:5px 8px; border-radius:2px; color:#ffffff; font-size:16px;
+        }
+        
+        .justify-p {
+            text-align: justify;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        /* Footer */
         footer {
-            background-color: #343a40;
-            color: #ffffff;
+            background: linear-gradient(135deg, #2c3e50, #1a2530);
+            color: white;
             text-align: center;
             padding: 20px;
-            font-size: 0.9rem;
+            margin-top: auto;
         }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            header {
-                padding: 30px 15px;
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
             }
-            header h1 {
-                font-size: 2rem;
+            
+            nav ul {
+                gap: 15px;
             }
-            .container {
+            
+            .tool-container, .about-section {
                 padding: 20px;
             }
-            #preview {
+            
+            h1 {
+                font-size: 20px;
+            }
+            
+            .upload-area {
+                padding: 30px 15px;
+            }
+            
+            .size-input {
                 flex-direction: column;
+                gap: 10px;
             }
-            .image-container {
-                flex: 1 1 100%;
-            }
-            button, #upload, #target-size {
-                max-width: 100%;
-            }
+        }
+
+        .error {
+            color: #ff6b6b;
+            text-align: center;
+            margin: 15px 0;
+            padding: 10px;
+            background-color: #fff0f0;
+            border-radius: 2px;
+            display: none;
         }
     </style>
 </head>
 <body>
+    <!-- Header with navigation -->
     <header>
-        <h1>Image Resizer Tool</h1>
-        <p>A professional tool to compress images to your desired file size in KB</p>
-    </header>
-    <main>
-        <div class="container">
-            <section id="description">
-                <h2>Description</h2>
-                <p>This application enables users to upload images and compress them to a specified file size in kilobytes (KB). All processing occurs client-side using JavaScript, ensuring data privacy and efficient performance. It supports common image formats such as JPEG and PNG, with optimal results for JPEG files.</p>
-            </section>
-            <section id="tool">
-                <h2>Resize Image</h2>
-                <input type="file" id="upload" accept="image/*">
-                <label for="target-size">Target Size (KB):</label>
-                <input type="number" id="target-size" min="1" value="100">
-                <button onclick="resizeImage()">Resize Image</button>
-                <div id="status"></div>
-                <div id="preview">
-                    <div class="image-container">
-                        <h3>Original Image</h3>
-                        <img id="original-preview" alt="Original Image">
-                        <p id="original-size"></p>
-                    </div>
-                    <div class="image-container">
-                        <h3>Resized Image</h3>
-                        <img id="resized-preview" alt="Resized Image">
-                        <p id="resized-size"></p>
-                        <a id="download" download="resized.jpg">Download Resized Image</a>
-                    </div>
-                </div>
-            </section>
-            <section id="about">
-                <h2>About</h2>
-                <p>Developed as a streamlined, single-page web application utilizing HTML, CSS, and JavaScript. It adjusts image quality and dimensions to achieve the target file size, optimized for seamless use across desktop and mobile devices.</p>
-            </section>
+        <div class="header-content">
+            <div class="logo">
+                <h1>Tiny PDF</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Tools</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
         </div>
-    </main>
+    </header>
+
+    <div class="container">
+        <!-- PDF Compression Tool -->
+        <section class="tool-container">
+            <h2 class="tool-title">PDF Compressor</h2>
+            <p class="tool-description">Reduce your PDF file size without significant quality loss</p>
+            
+            <div class="upload-area" id="uploadArea">
+                <i class="fas fa-file-upload"></i>
+                <p>Drag & drop your PDF here</p>
+                <p>or</p>
+                <button class="browse-btn" id="browseBtn">Browse Files</button>
+                <input type="file" id="fileInput" accept=".pdf">
+            </div>
+
+            <div class="error" id="errorMessage"></div>
+            
+            <div class="options">
+                <div class="option-title">Compression Level</div>
+                <div class="size-input">
+                    <label for="maxSize">Enter Size (In KB)</label>
+                    <input type="number" id="maxSize" min="50" placeholder="Eg: 400">
+                </div>
+            </div>
+            
+            <button class="compress-btn" id="compressBtn" disabled>Compress PDF</button>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Compressing your PDF...</p>
+            </div>
+            
+            <div class="result" id="result">
+                <div class="success-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <p>Your PDF has been compressed successfully!</p>
+                
+                <div class="file-info">
+                    <span>Original Size:</span>
+                    <span id="originalSize">0 KB</span>
+                </div>
+                
+                <div class="file-info">
+                    <span>Compressed Size:</span>
+                    <span id="compressedSize">0 KB</span>
+                </div>
+                
+                <div class="file-info">
+                    <span>Size Reduction:</span>
+                    <span id="reduction">0%</span>
+                </div>
+                
+                <button class="download-btn" id="downloadBtn">Download Compressed PDF</button>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section class="about-section">
+            <h4 class="about-title">About This Tool</h4>
+            <p class="justify-p">
+                Tiny PDF is a powerful, user-friendly tool designed to compress your PDF files without significant loss of quality. Our advanced compression algorithm ensures that your documents remain clear and readable while reducing their file size by up to 70%. This makes it easier to share PDFs via email, messaging apps, or any platform with file size limitations.
+            </p>
+            <p class="justify-p">
+                The tool processes your files using the PDF.co API, ensuring high-quality compression while maintaining security for your documents. The compression process is quick and efficient, typically taking just a few seconds depending on the file size and your internet connection.
+            </p>
+            <p class="justify-p">
+                Whether you're a student needing to submit assignments, a professional sharing reports, or anyone looking to save storage space, Tiny PDF offers a simple solution. The interface is designed to be intuitive and accessible for users of all technical levels, with no installation or registration required. Try it today and experience the convenience of smaller PDF files!
+            </p>
+        </section>
+    </div>
+
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Image Resizer Tool. All rights reserved.</p>
+        <div class="footer-content">
+            <p>&copy; 2023 Tiny PDF. All rights reserved.</p>
+        </div>
     </footer>
+
     <script>
-        let originalImage = null;
-        let targetSizeKB = 100;
-
-        document.getElementById('upload').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    originalImage = new Image();
-                    originalImage.src = e.target.result;
-                    originalImage.onload = function() {
-                        document.getElementById('original-preview').src = originalImage.src;
-                        const sizeKB = (file.size / 1024).toFixed(2);
-                        document.getElementById('original-size').textContent = `Size: ${sizeKB} KB`;
-                    };
-                };
-                reader.readAsDataURL(file);
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const browseBtn = document.getElementById('browseBtn');
+            const compressBtn = document.getElementById('compressBtn');
+            const maxSizeInput = document.getElementById('maxSize');
+            const loadingElement = document.getElementById('loading');
+            const resultElement = document.getElementById('result');
+            const originalSizeElement = document.getElementById('originalSize');
+            const compressedSizeElement = document.getElementById('compressedSize');
+            const reductionElement = document.getElementById('reduction');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            let uploadedFile = null;
+            let compressedPDF = null;
+            const apiKey = 'yadavsubba2003@gmail.com_MHmwIcyCA0R7zDhvEqjbuYv7TOipbsGaMyF3yxTFZ3aw7Z8BwuH0cN071sJCiNN1';
+            
+            // Event Listeners
+            browseBtn.addEventListener('click', () => fileInput.click());
+            
+            fileInput.addEventListener('change', handleFileSelection);
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length) {
+                    fileInput.files = e.dataTransfer.files;
+                    handleFileSelection();
+                }
+            });
+            
+            compressBtn.addEventListener('click', compressPDF);
+            
+            downloadBtn.addEventListener('click', downloadCompressedPDF);
+            
+            // Functions
+            function handleFileSelection() {
+                if (fileInput.files.length === 0) return;
+                
+                const file = fileInput.files[0];
+                
+                // Check if file is PDF
+                if (file.type !== 'application/pdf') {
+                    showError('Please upload a PDF file');
+                    return;
+                }
+                
+                // Check file size (limit to 50MB)
+                if (file.size > 50 * 1024 * 1024) {
+                    showError('File size must be less than 50MB');
+                    return;
+                }
+                
+                hideError();
+                uploadedFile = file;
+                compressBtn.disabled = false;
+                
+                // Update UI to show selected file
+                uploadArea.innerHTML = `
+                    <i class="fas fa-file-pdf"></i>
+                    <p>Selected file:</p>
+                    <p><strong>${file.name}</strong></p>
+                    <p>Size: ${formatFileSize(file.size)}</p>
+                    <button class="browse-btn">Change File</button>
+                `;
+                
+                // Re-add event listener to the new button
+                uploadArea.querySelector('.browse-btn').addEventListener('click', () => fileInput.click());
+            }
+            
+            async function compressPDF() {
+                if (!uploadedFile) return;
+                
+                // Show loading animation
+                loadingElement.style.display = 'flex';
+                resultElement.style.display = 'none';
+                hideError();
+                
+                try {
+                    // Prepare the file for upload
+                    const formData = new FormData();
+                    formData.append('file', uploadedFile);
+                    
+                    // Get target size if specified
+                    const targetSizeKB = maxSizeInput.value ? parseInt(maxSizeInput.value) : null;
+                    
+                    // Add parameters
+                    const url = new URL('https://api.pdf.co/v1/pdf/compress');
+                    if (targetSizeKB) {
+                        url.searchParams.append('name', `compressed_${uploadedFile.name}`);
+                        url.searchParams.append('async', 'false');
+                    }
+                    
+                    // Make API request
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'x-api-key': apiKey
+                        },
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`API error: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    
+                    if (data.error) {
+                        throw new Error(data.message);
+                    }
+                    
+                    // Download the compressed file
+                    const compressedFileResponse = await fetch(data.url);
+                    const compressedFileBlob = await compressedFileResponse.blob();
+                    
+                    // Create a local URL for the compressed file
+                    compressedPDF = compressedFileBlob;
+                    
+                    // Update result UI
+                    const originalSize = uploadedFile.size;
+                    const compressedSize = compressedFileBlob.size;
+                    
+                    originalSizeElement.textContent = formatFileSize(originalSize);
+                    compressedSizeElement.textContent = formatFileSize(compressedSize);
+                    
+                    const reduction = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
+                    reductionElement.textContent = `${reduction}%`;
+                    
+                    // Hide loading, show result
+                    loadingElement.style.display = 'none';
+                    resultElement.style.display = 'block';
+                    
+                } catch (error) {
+                    console.error('Compression error:', error);
+                    loadingElement.style.display = 'none';
+                    showError('Compression failed: ' + error.message);
+                }
+            }
+            
+            function downloadCompressedPDF() {
+                if (!compressedPDF) return;
+                
+                const downloadUrl = URL.createObjectURL(compressedPDF);
+                const a = document.createElement('a');
+                a.href = downloadUrl;
+                a.download = `compressed_${uploadedFile.name}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes < 1024) {
+                    return bytes + ' bytes';
+                } else if (bytes < 1048576) {
+                    return (bytes / 1024).toFixed(1) + ' KB';
+                } else {
+                    return (bytes / 1048576).toFixed(1) + ' MB';
+                }
+            }
+            
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.style.display = 'block';
+            }
+            
+            function hideError() {
+                errorMessage.style.display = 'none';
             }
         });
-
-        document.getElementById('target-size').addEventListener('change', function(event) {
-            targetSizeKB = parseInt(event.target.value, 10);
-        });
-
-        function resizeImage() {
-            if (!originalImage) {
-                alert('Please upload an image first.');
-                return;
-            }
-
-            document.getElementById('status').textContent = 'Processing...';
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            let width = originalImage.width;
-            let height = originalImage.height;
-            let quality = 0.9;
-            let blob = null;
-            const targetBytes = targetSizeKB * 1024;
-
-            const getBlob = () => new Promise((resolve) => {
-                canvas.toBlob(resolve, 'image/jpeg', quality);
-            });
-
-            const compress = async () => {
-                canvas.width = width;
-                canvas.height = height;
-                ctx.drawImage(originalImage, 0, 0, width, height);
-                blob = await getBlob();
-
-                while (blob.size > targetBytes && quality > 0.1) {
-                    quality -= 0.05;
-                    blob = await getBlob();
-                }
-
-                if (blob.size > targetBytes) {
-                    const scale = Math.sqrt(targetBytes / blob.size);
-                    width = Math.round(width * scale * 0.9);
-                    height = Math.round(height * scale * 0.9);
-                    return compress();
-                }
-
-                return blob;
-            };
-
-            compress().then((finalBlob) => {
-                const url = URL.createObjectURL(finalBlob);
-                document.getElementById('resized-preview').src = url;
-                const sizeKB = (finalBlob.size / 1024).toFixed(2);
-                document.getElementById('resized-size').textContent = `Size: ${sizeKB} KB`;
-                const downloadLink = document.getElementById('download');
-                downloadLink.href = url;
-                downloadLink.style.display = 'inline-block';
-                document.getElementById('status').textContent = 'Processing complete.';
-            }).catch((err) => {
-                document.getElementById('status').textContent = 'Error processing image.';
-                console.error(err);
-            });
-        }
     </script>
 </body>
 </html>
