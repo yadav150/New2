@@ -20,32 +20,32 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            max-width: 1400px;
+            align-items: center;
         }
         
         /* Header Styles */
         header {
             background: linear-gradient(135deg, #2c3e50, #1a2530);
             color: white;
-            padding: 10px;
+            padding: 20px 0;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        .logo{
-            background-color:#0082FF;
-            padding: 5px px;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 30px;
+            width: 100%;
         }
         
         .header-content {
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .logo h1 {
@@ -80,10 +80,10 @@
         }
         
         /* Main Content */
-        .container {
+        .main-container {
+            width: 90%;
             max-width: 1000px;
             margin: 30px auto;
-            padding: 0 20px;
             flex: 1;
         }
         
@@ -94,6 +94,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             padding: 30px;
             margin-bottom: 40px;
+            width: 100%;
         }
         
         .tool-title {
@@ -277,12 +278,19 @@
             background-color: white;
             border-radius: 2px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-            padding: 10px 10px;
-            margin-bottom: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            width: 100%;
         }
         
         .about-title {
-            background-color:#FF0000; padding:5px 8px; border-radius:2px; color:#ffffff; font-size:16px;
+            font-size: 20px;
+            color: #ff6b6b;
+            background-color: #fff0f0;
+            padding: 8px 12px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            display: inline-block;
         }
         
         .justify-p {
@@ -296,11 +304,13 @@
             background: linear-gradient(135deg, #2c3e50, #1a2530);
             color: white;
             text-align: center;
-            padding: 20px;
+            padding: 20px 0;
+            width: 100%;
             margin-top: auto;
         }
         
         .footer-content {
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -320,7 +330,7 @@
                 padding: 20px;
             }
             
-            h1 {
+            .tool-title {
                 font-size: 20px;
             }
             
@@ -331,6 +341,10 @@
             .size-input {
                 flex-direction: column;
                 gap: 10px;
+            }
+            
+            .about-title {
+                font-size: 18px;
             }
         }
 
@@ -350,6 +364,7 @@
     <header>
         <div class="header-content">
             <div class="logo">
+                <i class="fas fa-file-pdf"></i>
                 <h1>Tiny PDF</h1>
             </div>
             <nav>
@@ -362,7 +377,7 @@
         </div>
     </header>
 
-    <div class="container">
+    <div class="main-container">
         <!-- PDF Compression Tool -->
         <section class="tool-container">
             <h2 class="tool-title">PDF Compressor</h2>
@@ -379,10 +394,10 @@
             <div class="error" id="errorMessage"></div>
             
             <div class="options">
-                <div class="option-title">Compression Level</div>
+                <div class="option-title">Compression Options (Optional)</div>
                 <div class="size-input">
-                    <label for="maxSize">Enter Size (In KB)</label>
-                    <input type="number" id="maxSize" min="50" placeholder="Eg: 400">
+                    <label for="maxSize">Max Size (KB):</label>
+                    <input type="number" id="maxSize" min="50" placeholder="Optional">
                 </div>
             </div>
             
